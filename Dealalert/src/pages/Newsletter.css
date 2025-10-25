@@ -1,0 +1,101 @@
+.newsletter-page {
+  padding: 2rem 0;
+}
+
+.newsletter-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.newsletter-content h1 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.newsletter-content > p {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.newsletter-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.newsletter-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.newsletter-form input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.newsletter-form input:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.newsletter-benefits {
+  text-align: left;
+}
+
+.newsletter-benefits h2 {
+  color: #3498db;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.newsletter-benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.newsletter-benefits li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.newsletter-benefits li:last-child {
+  border-bottom: none;
+}
+
+.newsletter-benefits li:before {
+  content: "✓";
+  color: #27ae60;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
