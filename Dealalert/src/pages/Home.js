@@ -1,8 +1,9 @@
 // src/pages/Home.js
 
 import React, { useEffect, useCallback } from 'react';
-import { useDealContext } from '../context/DealContext'; // Ensure this line is complete and correct
-import { translate } from '../utils/translations'; // Use the translation utility
+// FIX: CRITICAL ADDITION - Importing the required hook
+import { useDealContext } from '../context/DealContext'; 
+import { translate } from '../utils/translations'; 
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -11,14 +12,14 @@ import NewsletterForm from '../components/common/NewsletterForm';
 import './Home.css'; 
 
 
-// --- Helper Functions (Pure functions - No hooks required) ---
+// --- Helper Functions (Pure functions - Must be outside the component) ---
 
 function calculateDiscount(original, discount) {
     if (!original || !discount) return '0% OFF';
     const numOriginal = parseFloat(original);
     const numDiscount = parseFloat(discount);
     if (isNaN(numOriginal) || isNaN(numDiscount) || numOriginal <= 0) return '0% OFF';
-    const discountPercent = Math.round((1 - numOriginal / numDiscount) * 100);
+    const discountPercent = Math.round((1 - numDiscount / original) * 100);
     return `${discountPercent}% OFF`;
 }
 
@@ -139,7 +140,7 @@ function Home() {
             <section className="hero">
                 <div className="container">
                     <div className="hero-content">
-                        {/* Use central translation */}
+                        {/* Uses central translation */}
                         <h1>{translate('HERO_HEADING', language)}</h1>
                         <p>{translate('HERO_SUBTEXT', language)}</p>
                         
@@ -183,6 +184,7 @@ function Home() {
                         </a>
                     </div>
                     <div className="deals-grid" id="digitalDeals">
+                        {/* Filters deals locally from context state */}
                         {deals.filter(d => d.category === 'digital').map((deal) => <DealCard key={deal.id} deal={deal} />)}
                     </div>
                 </section>
