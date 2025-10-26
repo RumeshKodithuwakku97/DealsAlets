@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  # This rule ensures all paths fall back to index.html
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true # <-- CRITICAL FIX: Forces the rewrite for all client-side routes
+
+# Security headers (These are fine)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
