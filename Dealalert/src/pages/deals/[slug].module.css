@@ -1,0 +1,133 @@
+/* src/pages/deals/[slug].module.css */
+
+/* Main wrapper for the page content */
+.dealPage {
+    /* Ensures the header/footer structure works */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Container for the specific deal content (e.g., inside the .container) */
+.dealContentSingle {
+    padding: 3rem 0;
+    max-width: 900px; /* Center content for better readability */
+    margin: 0 auto;
+}
+
+/* Deal Title */
+.dealTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+/* Meta info (Store, Discount, Expiry) */
+.dealMetaInfo {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+/* Image Container */
+.dealImageContainer {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.dealMainImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Description and Features */
+.dealDetails h2,
+.dealDetails h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--light-color);
+    padding-bottom: 5px;
+}
+
+.dealDetails p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.dealDetails ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.dealDetails li {
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+/* Action Box/CTA */
+.dealActionBox {
+    background: var(--light-color);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+}
+
+.currentPrice {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.originalPrice {
+    text-decoration: line-through;
+    color: var(--text-light);
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.ctaButton {
+    /* Inherits styling from the main CTA button class */
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    box-shadow: var(--shadow);
+}
+
+.ctaButton:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dealTitle {
+        font-size: 2rem;
+    }
+    .dealActionBox {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .originalPrice {
+        margin-left: 0;
+    }
+}

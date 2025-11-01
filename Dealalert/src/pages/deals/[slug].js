@@ -1,10 +1,10 @@
 // src/pages/deals/[slug].js
 
 import React from 'react';
-// FIX 1: Corrected path resolution to access the data service from src/services/data/
+// FIX 1: Path must be '../../' to reach src/services/data/
 import { fetchDeals } from '../../services/data/deals.js'; 
 import { translate } from '../../lib/translations.js'; 
-// FIX 2 & 3: Corrected path resolution to access the components from src/components/common/
+// FIX 2 & 3: Path must be '../../' to reach src/components/common/
 import Header from '../../components/common/Header.js';
 import Footer from '../../components/common/Footer.js';
 // Assuming local styles are imported as a module
