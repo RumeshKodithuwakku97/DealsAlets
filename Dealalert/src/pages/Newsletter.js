@@ -1,73 +1,41 @@
-// src/components/common/NewsletterForm.js
+// src/pages/Newsletter.js
 
-import React, { useState } from 'react';
+import React from 'react';
+// FIX: The faulty CSS import that caused the error is removed.
+// import './NewsletterForm.module.css'; // <-- THIS LINE WAS THE PROBLEM
 
-const getTranslatedText = (textMap, lang) => textMap[lang] || textMap['en'];
+import Header from '../components/common/Header.js'; 
+import Footer from '../components/common/Footer.js'; 
+import NewsletterForm from '../components/common/NewsletterForm.js'; // The component is imported correctly
+import { useDealContext } from '../context/DealContext.js'; 
+// Assuming the page's local CSS is correctly named and placed
+import styles from './Newsletter.module.css'; 
 
-const NewsletterForm = ({ language, onSubmit }) => {
-    const [email, setEmail] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
+function NewsletterPage() {
+    const { language } = useDealContext();
     
-    const h3Translations = {
-        en: "Get Daily Deal Alerts!",
-        si: "දිනපතා ගනුදෙනු ඇඟවීම් ලබා ගන්න!",
-        ta: "தினசரி ஒப்பந்த எச்சரிக்கைகளைப் பெறுங்கள்!"
-    };
-
-    const pTranslations = {
-        en: "Never miss the best deals. We'll send you one email per day with the hottest offers.",
-        si: "හොඳම ගනුදෙනු කිසිදා අතපසු නොකරන්න. අපි ඔබට දිනකට ඊමේල් එකක් උණුසුම්ම දීමනා සමඟ එවන්නෙමු.",
-        ta: "சிறந்த ஒப்பந்தங்களை ஒருபோதும் தவறவிடாதீர்கள். நாங்கள் உங்களுக்கு ஒரு நாளைக்கு ஒரு மின்னஞ்சலை சூடான சலுகைகளுடன் அனுப்புவோம்."
-    };
-
-    const buttonTranslations = {
-        en: "Subscribe",
-        si: "දායක වන්න",
-        ta: "குழுசேரவும்"
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setIsSubmitting(true);
-        
-        try {
-            await onSubmit(email); // Call the subscription logic passed from Home.js
-            setEmail('');
-        } catch (error) {
-            console.error("Subscription failed:", error);
-            alert("Subscription failed. Check console for details.");
-        } finally {
-            setIsSubmitting(false);
-        }
+    // Placeholder submission logic that would call the Airtable service
+    const handleSubmit = async (email) => {
+        console.log("Newsletter submission attempt for:", email);
+        // This is where you would call addSubscriber(email) from src/services/data/subscribers.js
     };
 
     return (
-        <div className="newsletter-content">
-            <h3>
-                <i className="fas fa-envelope"></i>
-                {getTranslatedText(h3Translations, language)}
-            </h3>
-            <p>
-                {getTranslatedText(pTranslations, language)}
-            </p>
-            <form className="newsletter-form" onSubmit={handleSubmit}>
-                <input 
-                    type="email" 
-                    placeholder="Enter your email address" 
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+        // Apply local module styles for the page layout
+        <div className={styles.newsletterPage}> 
+            {/* Header needs props even if empty */}
+            <Header onFilterDeals={()=>{}} onSearchSubmit={()=>{}} />
+            <main className={styles.mainContent}>
+                {/* The NewsletterForm component handles its own CSS module import internally */}
+                <NewsletterForm 
+                    language={language}
+                    onSubmit={handleSubmit}
                 />
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 
-                        <i className="fas fa-spinner fa-spin"></i> : 
-                        <i className="fas fa-paper-plane"></i>
-                    }
-                    {getTranslatedText(buttonTranslations, language)}
-                </button>
-            </form>
+            </main>
+            <Footer />
         </div>
     );
-};
+}
 
-export default NewsletterForm;
+export default NewsletterPage;

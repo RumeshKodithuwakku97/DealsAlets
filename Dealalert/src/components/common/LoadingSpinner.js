@@ -1,7 +1,7 @@
 // src/components/common/LoadingSpinner.js
 
 import React from 'react';
-import './LoadingSpinner.css';
+import './LoadingSpinner.module.css';
 
 const LoadingSpinner = () => {
     // This div contains the visual spinner

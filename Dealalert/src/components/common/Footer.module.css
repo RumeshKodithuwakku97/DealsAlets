@@ -1,0 +1,36 @@
+/* src/components/common/Footer.module.css */
+
+/* FIX: The 'footer' tag selector is changed to the '.footer' class selector */
+.footer {
+    background: var(--dark-color);
+    color: var(--white);
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* Updated selectors for inner elements */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footerLinks a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footerBottom {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+}

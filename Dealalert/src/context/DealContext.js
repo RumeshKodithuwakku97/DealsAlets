@@ -1,38 +1,39 @@
 // src/context/DealContext.js
 
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
-// FIX: Path must be correct relative to the context folder
-import { fetchDealsFromWordPress, getSampleDeals } from '../services/wordpress/deals'; 
+// FIX: Change import path to the new, stable Airtable service
+import { fetchDeals } from '../services/data/deals'; 
 
 // 1. Create the context object
 const DealContext = createContext();
 
 // 2. Custom hook for easy consumption
-export const useDealContext = () => useContext(DealContext); // <-- Hook definition
+export const useDealContext = () => useContext(DealContext); 
 
 // 3. Provider component that manages state
-export const DealProvider = ({ children }) => { // <-- Functional Component
-    // ALL HOOKS MUST BE CALLED INSIDE THIS FUNCTION
+export const DealProvider = ({ children }) => { 
+    // All state related to admin/login is removed
     const [deals, setDeals] = useState([]); 
     const [loading, setLoading] = useState(true);
     const [language, setLanguage] = useState('en');
     const [activeCategory, setActiveCategory] = useState('all');
 
-    // Centralized function to load/filter deals
+    // Centralized function to load/filter deals (READ-ONLY)
     const loadDeals = useCallback(async (category = activeCategory) => {
         setLoading(true);
         setActiveCategory(category);
         try {
-            // Placeholder/Sample Data Logic
-            const sampleData = getSampleDeals();
-            const filteredDeals = sampleData.filter(deal => category === 'all' || deal.category === deal.category);
+            // New call to the stable Airtable service
+            const allDeals = await fetchDeals(); 
+            
+            // Filtering is done in the frontend after fetching all published deals
+            const filteredDeals = allDeals.filter(deal => category === 'all' || deal.category === category);
             
             setDeals(filteredDeals);
         } catch (error) {
-            console.error('Failed to fetch deals in context, using sample data:', error);
-            const sampleData = getSampleDeals();
-            const filteredDeals = sampleData.filter(deal => category === 'all' || deal.category === category);
-            setDeals(filteredDeals);
+            console.error('Failed to fetch deals from Airtable:', error);
+            // In a live system, you might set an empty array or show a network error message
+            setDeals([]);
         } finally {
             setLoading(false);
         }
@@ -43,6 +44,7 @@ export const DealProvider = ({ children }) => { // <-- Functional Component
         loadDeals();
     }, [loadDeals]);
 
+    // Removed all CRUD functions (create, update, delete) from the 'value' object
 
     const value = {
         deals,

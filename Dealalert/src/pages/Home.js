@@ -2,18 +2,17 @@
 
 import React, { useEffect, useCallback } from 'react';
 // FIX: CRITICAL ADDITION - Importing the required hook
-import { useDealContext } from '../context/DealContext'; 
-import { translate } from '../utils/translations'; 
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import NewsletterForm from '../components/common/NewsletterForm'; 
+import { useDealContext } from '../context/DealContext.js'; 
+import { translate } from '../lib/translations.js';
+import Header from '../components/common/Header.js';
+import Footer from '../components/common/Footer.js';
+import LoadingSpinner from '../components/common/LoadingSpinner.js';
+import NewsletterForm from '../components/common/NewsletterForm.js'; 
 
-import './Home.css'; 
+import './Home.module.css'; 
 
 
-// --- Helper Functions (Pure functions - Must be outside the component) ---
-
+// --- Helper Functions (REMAINS THE SAME) ---
 function calculateDiscount(original, discount) {
     if (!original || !discount) return '0% OFF';
     const numOriginal = parseFloat(original);
@@ -36,8 +35,7 @@ function getExpiryText(expiryDate) {
 }
 
 
-// --- Deal Card Component ---
-
+// --- Deal Card Component (REMAINS THE SAME) ---
 const DealCard = ({ deal }) => {
     const openAffiliateLink = (url) => {
         window.open(url, '_blank');
@@ -100,20 +98,15 @@ function Home() {
     const handleSearchSubmit = (term) => {
         alert(`${translate('SEARCH_PLACEHOLDER', language)}: "${term}"`);
     };
-
-    const showLogin = () => {
-        alert(translate('LOGIN_BUTTON', language) + ' functionality would go here!');
-    };
-
-    const goToAdmin = () => {
-        window.location.href = '/admin/login';
-    };
-
+    
+    // REMOVED: showLogin and goToAdmin functions are deleted.
+    
     const scrollToDeals = () => {
         document.getElementById('dealsGrid').scrollIntoView({ behavior: 'smooth' });
     };
     
     const subscribeNewsletter = async (email) => {
+        // This function will use the new data/subscribers.js service (POST)
         alert(translate('NL_HEADING', language) + ` for ${email}.`);
     };
 
@@ -132,8 +125,7 @@ function Home() {
             <Header
                 onFilterDeals={handleFilterDeals}
                 onSearchSubmit={handleSearchSubmit}
-                onShowLogin={showLogin}
-                onGoToAdmin={goToAdmin}
+                // REMOVED: onShowLogin and onGoToAdmin props
             />
             
             {/* Hero Section */}

@@ -1,24 +1,18 @@
-// src/App.jsx
+// src/App.jsx (Renamed to _app.js in the final Next.js structure)
 
 import React from 'react';
-// FIX: Import Navigate (and Home)
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
-import AdminApp from './AdminApp';
-import Home from './pages/Home'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import PublicApp from './PublicApp.js';
 
 function App() {
+  // All admin imports, the AdminApp component, and conditional routing are removed.
+  // The app now only routes the public interface.
   return (
     <Router>
       <div className="App">
+        {/* All public routes are now nested within the PublicApp component */}
         <Routes>
-          {/* FIX: The root path renders the Home component (which uses the context) */}
-          <Route path="/" element={<Home />} />
-          
-          {/* Admin routes are nested */}
-          <Route path="/admin/*" element={<AdminApp />} />
-          
-          {/* Fallback/404 path redirects to the Home page */}
-          <Route path="*" element={<Navigate to="/" replace />} /> 
+          <Route path="/*" element={<PublicApp />} />
         </Routes>
       </div>
     </Router>
