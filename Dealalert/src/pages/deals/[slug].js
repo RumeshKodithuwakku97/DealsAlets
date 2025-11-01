@@ -1,16 +1,19 @@
 // src/pages/deals/[slug].js
 
 import React from 'react';
-import { fetchDeals } from '../services/data/deals'; // Your new Airtable service
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-// If you implement Next.js's Image component, use: 
-// import Image from 'next/image'; 
+// FIX 1: Corrected path resolution to access the data service from src/services/data/
+import { fetchDeals } from '../../services/data/deals.js'; 
+import { translate } from '../../lib/translations.js'; 
+// FIX 2 & 3: Corrected path resolution to access the components from src/components/common/
+import Header from '../../components/common/Header.js';
+import Footer from '../../components/common/Footer.js';
+// Assuming local styles are imported as a module
+import styles from './[slug].module.css'; 
+
 
 // --- Component to display a single deal ---
 function DealPage({ deal }) {
     if (!deal) {
-        // Fallback for Next.js when page is not found or still generating
         return <div>Deal Not Found.</div>; 
     }
 
@@ -19,25 +22,23 @@ function DealPage({ deal }) {
     };
 
     return (
-        <div className="deal-page">
-            {/* Header is rendered normally */}
+        <div className={styles.dealPage}>
             <Header onFilterDeals={() => {}} onSearchSubmit={() => {}} /> 
 
             <div className="container">
-                <div className="deal-content-single">
-                    <h1 className="deal-title">{deal.title}</h1>
-                    <div className="deal-meta-info">
+                <div className={styles.dealContentSingle}>
+                    <h1 className={styles.dealTitle}>{deal.title}</h1>
+                    <div className={styles.dealMetaInfo}>
                         <span>Store: {deal.store}</span> | 
                         <span>Discount: {deal.discount}</span> |
                         <span>Expires: {deal.expiry}</span>
                     </div>
 
-                    <div className="deal-image-container">
-                        {/* If using Next.js Image component, update here */}
-                        <img src={deal.image} alt={deal.title} className="deal-main-image" />
+                    <div className={styles.dealImageContainer}>
+                        <img src={deal.image} alt={deal.title} className={styles.dealMainImage} />
                     </div>
 
-                    <div className="deal-details">
+                    <div className={styles.dealDetails}>
                         <h2>Product Description</h2>
                         <p>{deal.description}</p>
 
@@ -49,11 +50,11 @@ function DealPage({ deal }) {
                         </ul>
                     </div>
 
-                    <div className="deal-action-box">
-                        <span className="current-price">{deal.currentPrice}</span>
-                        <span className="original-price">{deal.originalPrice}</span>
+                    <div className={styles.dealActionBox}>
+                        <span className={styles.currentPrice}>{deal.currentPrice}</span>
+                        <span className={styles.originalPrice}>{deal.originalPrice}</span>
                         <button 
-                            className="cta-button" 
+                            className={styles.ctaButton} 
                             onClick={() => openAffiliateLink(deal.affiliateUrl)}
                         >
                             GET THE DEAL NOW!
@@ -79,10 +80,9 @@ export async function getStaticPaths() {
 
     // Create a path for every deal using its slug
     const paths = deals.map((deal) => ({
-        params: { slug: deal.slug }, // Assumes you added a 'slug' field in Airtable
+        params: { slug: deal.slug }, 
     }));
 
-    // fallback: 'blocking' tells Next.js to wait and try to build new pages on-demand
     return { paths, fallback: 'blocking' }; 
 }
 
@@ -94,7 +94,6 @@ export async function getStaticProps({ params }) {
     const deal = deals.find((d) => d.slug === params.slug);
 
     if (!deal) {
-        // If the deal is not found, return a 404 page
         return { notFound: true }; 
     }
 
@@ -102,8 +101,6 @@ export async function getStaticProps({ params }) {
         props: {
             deal,
         },
-        // Revalidate the page every 60 seconds (Incremental Static Regeneration)
-        // This is how the static site updates prices/deals from Airtable without rebuilding everything.
         revalidate: 60, 
     };
 }
